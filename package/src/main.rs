@@ -1,3 +1,4 @@
 fn main() {
-    println!("Hello, world!");
+    let reversed: String = text_library::reverse("Rust");
+    println!("Reversed value: {}", reversed);
 }
