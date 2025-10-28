@@ -1,5 +1,14 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub fn reverse(input: &str) -> String {
+    input.chars().rev().collect()
+}
+
+pub fn is_palindrome(input: &str) -> bool {
+    let cleaned_input: String = input
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .collect::<String>()
+        .to_lowercase();
+    cleaned_input == reverse(&cleaned_input)
 }
 
 #[cfg(test)]
@@ -7,8 +16,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn text_reverse() {
+        assert_eq!(reverse("wizard"), "draziw");
+    }
+
+    #[test]
+    fn text_is_palindrome() {
+        assert!(is_palindrome("A man, a plan, a canal, Panama"));
     }
 }
