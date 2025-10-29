@@ -1,27 +1,35 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(name = "greeter")]
 #[command(about = "A simple Cli tool to greet a person", long_about = "None")]
-struct Greet {
-    #[arg(short, long)]
-    name: String,
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
+}
 
-    #[arg(short, long, default_value_t = String::from("Hello"))]
-    greeting: String,
+#[derive(Subcommand)]
+enum Commands {
+    Hello {
+        #[arg(short, long)]
+        name: String,
+    },
 
-    #[arg(short, long, action = clap::ArgAction::SetTrue)]
-    uppercase: bool,
+    Goodbye {
+        #[arg(short, long)]
+        name: String,
+    },
 }
 
 fn main() {
-    let args: Greet = Greet::parse();
+    let args: Cli = Cli::parse();
 
-    let mut message: String = format!("{}, {}!", args.greeting, args.name);
-
-    if args.uppercase {
-        message = message.to_uppercase();
+    match args.command {
+        Commands::Hello { name } => {
+            println!("Hello, {}!", name);
+        }
+        Commands::Goodbye { name } => {
+            println!("Hello, {}!", name);
+        }
     }
-
-    println!("{}", message);
 }
